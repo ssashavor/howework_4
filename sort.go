@@ -19,22 +19,14 @@ func (p People) Len() int {
 	return len(p)
 }
 func (p People) Less(i, j int) bool {
-	if p[i].birthDay.Year() == p[j].birthDay.Year() {
-		if p[i].birthDay.Month() == p[j].birthDay.Month() {
-			if p[i].birthDay.Day() == p[j].birthDay.Day() {
-				if p[i].firstName == p[j].firstName {
-					return p[i].lastName < p[j].lastName
-				} else {
-					return p[i].firstName < p[j].firstName
-				}
-			} else {
-				return p[i].birthDay.Day() > p[j].birthDay.Day()
-			}
+	if p[i].birthDay == p[j].birthDay {
+		if p[i].firstName == p[j].firstName {
+			return p[i].lastName < p[j].lastName
 		} else {
-			return p[i].birthDay.Month() > p[j].birthDay.Month()
+			return p[i].firstName < p[j].firstName
 		}
 	}
-	return p[i].birthDay.Year() > p[j].birthDay.Year()
+	return p[i].birthDay.After(p[j].birthDay)
 }
 func (p People) Swap(i, j int) {
 	p[i], p[j] = p[j], p[i]
